@@ -23,10 +23,15 @@ form {
 .row {
     margin-left: 0px;
     margin-top: 10px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .label {
     width: 90px;
     display: inline-block;
+}
+
+.fa.icon-box {
+    font-size: 22px;
+    margin: 4px;
 }

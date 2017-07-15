@@ -1,9 +1,16 @@
 var contactAddEditController;
 
-contactAddEditController = function($scope, $http) {
-	$scope.contact = {};
-	$scope.contact.emails = [''];
-	$scope.contact.phones = [''];
+contactAddEditController = function($scope, $http,$stateParams) {
+
+    //TODO: obter request pelo id
+
+	$scope.contact = $stateParams.contact || {};
+
+	if(!$stateParams.id) {
+	    $scope.contact.emails = [''];
+    	$scope.contact.phones = [''];
+	}
+
 	$scope.submitted = false;
 	
 	$scope.save = function() {

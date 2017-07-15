@@ -10,7 +10,21 @@ contactListController = function($scope, $http) {
 	
 	$scope.listAllContacts = function() {
 
-		// Chamar o servlet /contacts com um método 'GET' para listar os contatos do banco de dados.
+	    console.log("Get contatos");
+
+        $http.get('/contacts').then(function(result) {
+            console.log("Sucesso");
+            console.log(result);
+            $scope.contacts = result.data;
+        }, function(result) {
+            console.log("Error");
+            console.log(result);
+        });
+
+	};
+
+	$scope.edit = function(contact) {
+
 	};
 
 	$scope.preDelete = function(contact) {
@@ -21,7 +35,15 @@ contactListController = function($scope, $http) {
 	$scope.delete = function() {
 		if($scope.preDeletedContact != null) {
 
-			// Chamar o servlet /contacts com um método 'DELETE' para deletar um contato do banco de dados passando um parâmetro de identificação.
+		    $http.delete('/contacts/' + $scope.preDeletedContact.id).then(function(result) {
+                $scope.listAllContacts();
+                $('#myModal').modal('hide');
+            }, function(result) {
+                console.log("Error");
+                console.log(result);
+                $('#myModal').modal('hide');
+            });
+
 		}
 	};
 

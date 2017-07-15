@@ -1,46 +1,51 @@
 <!doctype html>
 <html>
-	<head>
-		<!-- Meta -->
-		<meta charset="utf-8">
-		<meta http-equiv="cache-control" content="no-cache">
-		<meta http-equiv="pragma" content="no-cache">
-		<meta http-equiv="expires" content="-1">
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<head>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-		<title>Avalia Candidatos</title>
-		
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-    
-    <link href="stylesheets/dashboard.css" rel="stylesheet">
-	
-	<!-- AngularJS -->
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
+    <title>Avalia Candidatos</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"/>
+
+    <link href="stylesheets/dashboard.css" rel="stylesheet"/>
+
+    <!-- Custom styles -->
+    <link href="css/style.css" rel="stylesheet"/>
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-resource.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-route.min.js"> </script>
-	<script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"> </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-route.min.js"></script>
+    <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>
 
-	<!-- Jquery JavaScript -->
+    <!-- Jquery JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-	<!-- ui-bootstrap -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
+    <!-- ui-bootstrap -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
 
-	<!-- Font Awesome -->
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+
+
 
     <script src="app/main.js"></script>
     <script src="controllers/contactAddEditController.js"></script>
     <script src="controllers/contactListController.js"></script>
- 
 
-	<script>
+
+    <script>
 		function init () {
 			var apisToLoad = 1;
 			var callback = function() {
@@ -51,20 +56,21 @@
 			};
 			gapi.client.load('avaliacandidatos', 'v1', callback, '//' + window.location.host + '/_ah/api');
 		}
-	</script>
 
-	</head>
-	
-	<body>
+    </script>
 
-		<div ui-view ng-controller="mainController"></div>
+</head>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+<body>
 
-	</body>
+<div ui-view ng-controller="mainController"></div>
 
-	<script src="https://apis.google.com/js/client.js?onload=init"></script>
-	
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+</body>
+
+<script src="https://apis.google.com/js/client.js?onload=init"></script>
+
 </html>
