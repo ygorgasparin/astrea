@@ -6,6 +6,7 @@
 	<packaging>war</packaging>
 	<version>1.0</version>
 
+
 	<groupId>br.com.aurum.astrea</groupId>
 	<artifactId>avaliacandidatos</artifactId>
 
