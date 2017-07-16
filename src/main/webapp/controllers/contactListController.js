@@ -4,6 +4,7 @@ contactListController = function($scope, $http) {
 	$scope.contacts = [];
 	$scope.preDeletedContact = {};
 	$scope.search_filter = "";
+	$scope.loading = false;
 
 	$scope.init = function() {
 		$scope.listAllContacts();
@@ -12,15 +13,17 @@ contactListController = function($scope, $http) {
 	$scope.listAllContacts = function() {
 
 	    var config = {};
-
+        $scope.loading = true;
 	    if($scope.search_filter.trim().length > 0)
 	        config.params = {filter:$scope.search_filter};
 
         $http.get('/contacts', config).then(function(result) {
             $scope.contacts = result.data;
+            $scope.loading = false;
         }, function(result) {
             alert(result.data.message);
             console.log(result.data);
+            $scope.loading = false;
         });
 
 	};
