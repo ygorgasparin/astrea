@@ -32,7 +32,8 @@ public class ContactServlet extends HttpServlet {
             resp.setStatus(202);
         } catch (Exception ex) {
             resp.setStatus(500);
-            writeJson(resp, new ErrorResult("Não foi possível salvar o contato"));
+            ex.printStackTrace();
+            writeJson(resp, new ErrorResult("Nao foi possivel salvar o contato"));
         }
     }
 
@@ -40,10 +41,17 @@ public class ContactServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             resp.setContentType("application/json");
-            writeJson(resp, DAO.list());
+
+            String filter = req.getParameter("filter");
+            if(filter != null)
+                writeJson(resp, DAO.list(filter));
+            else
+                writeJson(resp, DAO.list());
+
         } catch (Exception ex) {
+            ex.printStackTrace();
             resp.setStatus(500);
-            writeJson(resp, new ErrorResult("Não foi possível obter a lista de contatos"));
+            writeJson(resp, new ErrorResult("Nao foi possivel obter a lista de contatos"));
         }
 
     }
@@ -65,6 +73,7 @@ public class ContactServlet extends HttpServlet {
             DAO.delete(Long.parseLong(part1));
         } catch (Exception ex) {
             resp.setStatus(500);
+            ex.printStackTrace();
             writeJson(resp, new ErrorResult("Erro ao deletar contato"));
         }
     }

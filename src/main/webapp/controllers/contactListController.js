@@ -3,6 +3,7 @@ var contactListController;
 contactListController = function($scope, $http) {
 	$scope.contacts = [];
 	$scope.preDeletedContact = {};
+	$scope.search_filter = "";
 
 	$scope.init = function() {
 		$scope.listAllContacts();
@@ -10,20 +11,17 @@ contactListController = function($scope, $http) {
 	
 	$scope.listAllContacts = function() {
 
-	    console.log("Get contatos");
+	    var config = {};
 
-        $http.get('/contacts').then(function(result) {
-            console.log("Sucesso");
-            console.log(result);
+	    if($scope.search_filter.trim().length > 0)
+	        config.params = {filter:$scope.search_filter};
+
+        $http.get('/contacts', config).then(function(result) {
             $scope.contacts = result.data;
         }, function(result) {
-            console.log("Error");
-            console.log(result);
+            alert(result.data.message);
+            console.log(result.data);
         });
-
-	};
-
-	$scope.edit = function(contact) {
 
 	};
 
@@ -32,6 +30,11 @@ contactListController = function($scope, $http) {
 		$('#myModal').modal('show');
 	};
 
+	$scope.clearFilter = function() {
+	    $scope.search_filter = "";
+		$scope.listAllContacts();
+	}
+
 	$scope.delete = function() {
 		if($scope.preDeletedContact != null) {
 
@@ -39,11 +42,10 @@ contactListController = function($scope, $http) {
                 $scope.listAllContacts();
                 $('#myModal').modal('hide');
             }, function(result) {
-                console.log("Error");
-                console.log(result);
                 $('#myModal').modal('hide');
+                alert(result.data.message);
+                console.log(result.data);
             });
-
 		}
 	};
 

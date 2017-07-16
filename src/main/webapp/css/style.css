@@ -20,6 +20,11 @@ form {
     padding: 7px 9px;
 }
 
+.page-tools {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .row {
     margin-left: 0px;
     margin-top: 10px;
@@ -34,4 +39,17 @@ form {
 .fa.icon-box {
     font-size: 22px;
     margin: 4px;
+}
+
+.col-search {
+    padding: 0 !important;
+}
+
+.btn-reset-filter {
+    position: absolute !important;
+    left: -35px;
+    border: none;
+    margin: 4px;
+    padding: 3px;
+    z-index: 9;
 }

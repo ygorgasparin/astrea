@@ -9,8 +9,9 @@ import com.googlecode.objectify.annotation.Index;
 @Entity
 public class Contact {
 
-	@Id
+    @Id
 	private Long id;
+
 	@Index
 	private String name;
 
@@ -18,11 +19,14 @@ public class Contact {
 	private String birthMonth;
 	private String birthYear;
 
-	private String cpf;
+    @Index
+    private String cpf;
 	private String rg;
 
 	private List<String> phones;
-	private List<String> emails;
+
+    @Index
+    private List<String> emails;
 
 	private String address;
 
@@ -111,4 +115,19 @@ public class Contact {
 	public Long getId() {
 		return id;
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Contact contact = (Contact) o;
+
+        return id.equals(contact.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
