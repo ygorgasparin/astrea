@@ -12,6 +12,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
+/**
+ * API para processamento do Contact, aceita os seguintes metodos http:
+ * POST     /contacts
+ * GET      /contacts
+ * GET      /contacts?filter={filter}
+ * DELETE   /contacts/{id}
+ */
 public class ContactServlet extends HttpServlet {
 
     private static final ContactDao DAO = new ContactDao();
@@ -21,8 +28,19 @@ public class ContactServlet extends HttpServlet {
     static final String ERROR_POST = "Nao foi possivel salvar o contato";
     static final String ERROR_GET = "Nao foi possivel obter a lista de contatos";
     static final String ERROR_DELETE = "Erro ao deletar contato";
-    public static final String DELETE_PATH_ERROR = "Deve ser informado um id válido na url ex: /contacts/{id}";
+    static final String DELETE_PATH_ERROR = "Deve ser informado um id válido na url ex: /contacts/{id}";
 
+    /**
+     * Salva ou atualiza o objeto Contact enviado no body do request. O JSON enviado deve seguir o
+     * formato padrao do model {@link Contact}. Caso contrario um erro sera retornado.
+     * <p>
+     * E obrigatorio que o objeto contact possua pelo menos a propriedade 'name' preenchida,
+     * caso contrario um erro sera retornado.
+     *
+     * @param req
+     * @param resp
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
@@ -50,6 +68,18 @@ public class ContactServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Retorna uma lista dos objetos contact, para filtrar por name, cpf ou email deve ser enviado o parametro
+     * filter na url, ex:
+     * <p>
+     * GET /contacts?filter=ygor
+     * <p>
+     * Se nao for informado o parametro 'filter' ira retornar todos os objetos do banco de dados
+     *
+     * @param req
+     * @param resp
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
@@ -69,6 +99,14 @@ public class ContactServlet extends HttpServlet {
 
     }
 
+    /**
+     * Faz o delete do id passado na url, a url deve seguir o padrao rest:
+     * DELETE /contacts/{id}
+     *
+     * @param req
+     * @param resp
+     * @throws IOException
+     */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
@@ -91,6 +129,13 @@ public class ContactServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Verifica se existe um objeto Contact no request, se existir retorna este objeto, caso contrario
+     * retorna null.
+     *
+     * @param req
+     * @return
+     */
     protected Contact requestToContact(HttpServletRequest req) {
         try {
             return new Gson().fromJson(req.getReader(), Contact.class);
@@ -99,6 +144,13 @@ public class ContactServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Classe auxiliar para escrever o objeto passado como parametro no response em um formato JSON
+     *
+     * @param resp
+     * @param o
+     * @throws IOException
+     */
     protected void writeJson(HttpServletResponse resp, Object o) throws IOException {
         PrintWriter out = resp.getWriter();
         out.print(new Gson().toJson(o));
