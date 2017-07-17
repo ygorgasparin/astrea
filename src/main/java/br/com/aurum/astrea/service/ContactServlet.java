@@ -16,14 +16,27 @@ public class ContactServlet extends HttpServlet {
 
     private static final ContactDao DAO = new ContactDao();
 
+    static final String JSON_INVALIDO = "Formato do JSON invalido";
+    static final String NOME_OBRIGATORIO = "É obrigatório informar ao menos o nome do contato";
+    static final String ERROR_POST = "Nao foi possivel salvar o contato";
+    static final String ERROR_GET = "Nao foi possivel obter a lista de contatos";
+    static final String ERROR_DELETE = "Erro ao deletar contato";
+    public static final String DELETE_PATH_ERROR = "Deve ser informado um id válido na url ex: /contacts/{id}";
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        Contact contact = new Gson().fromJson(req.getReader(), Contact.class);
+        Contact contact = this.requestToContact(req);
+
+        if (contact == null) {
+            resp.setStatus(400);
+            writeJson(resp, new ErrorResult(JSON_INVALIDO));
+            return;
+        }
 
         if (StringUtil.isEmptyOrWhitespace(contact.getName())) {
             resp.setStatus(400);
-            writeJson(resp, new ErrorResult("É obrigatório informar ao menos o nome do contato"));
+            writeJson(resp, new ErrorResult(NOME_OBRIGATORIO));
             return;
         }
 
@@ -33,7 +46,7 @@ public class ContactServlet extends HttpServlet {
         } catch (Exception ex) {
             resp.setStatus(500);
             ex.printStackTrace();
-            writeJson(resp, new ErrorResult("Nao foi possivel salvar o contato"));
+            writeJson(resp, new ErrorResult(ERROR_POST));
         }
     }
 
@@ -43,7 +56,7 @@ public class ContactServlet extends HttpServlet {
             resp.setContentType("application/json");
 
             String filter = req.getParameter("filter");
-            if(filter != null)
+            if (filter != null)
                 writeJson(resp, DAO.list(filter));
             else
                 writeJson(resp, DAO.list());
@@ -51,7 +64,7 @@ public class ContactServlet extends HttpServlet {
         } catch (Exception ex) {
             ex.printStackTrace();
             resp.setStatus(500);
-            writeJson(resp, new ErrorResult("Nao foi possivel obter a lista de contatos"));
+            writeJson(resp, new ErrorResult(ERROR_GET));
         }
 
     }
@@ -64,7 +77,7 @@ public class ContactServlet extends HttpServlet {
 
         if (pathParts.length != 2) {
             resp.setStatus(400);
-            writeJson(resp, new ErrorResult("Deve ser informado um id válido na url ex: /contacts/{id}"));
+            writeJson(resp, new ErrorResult(DELETE_PATH_ERROR));
             return;
         }
 
@@ -74,7 +87,15 @@ public class ContactServlet extends HttpServlet {
         } catch (Exception ex) {
             resp.setStatus(500);
             ex.printStackTrace();
-            writeJson(resp, new ErrorResult("Erro ao deletar contato"));
+            writeJson(resp, new ErrorResult(ERROR_DELETE));
+        }
+    }
+
+    protected Contact requestToContact(HttpServletRequest req) {
+        try {
+            return new Gson().fromJson(req.getReader(), Contact.class);
+        } catch (Exception e) {
+            return null;
         }
     }
 

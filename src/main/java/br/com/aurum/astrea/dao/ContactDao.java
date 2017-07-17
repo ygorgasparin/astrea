@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
+
 public class ContactDao {
 
     static {
@@ -15,16 +18,16 @@ public class ContactDao {
     }
 
     public void save(Contact contact) {
-        ObjectifyService.ofy().save().entity(contact).now();
+        ofy().save().entity(contact).now();
     }
 
     public List<Contact> list() {
-        return ObjectifyService.ofy().load().type(Contact.class).list();
+        return ofy().load().type(Contact.class).list();
     }
 
     public List<Contact> list(String filter) {
 
-        Query<Contact> query = ObjectifyService.ofy().load().type(Contact.class);
+        Query<Contact> query = ofy().load().type(Contact.class);
 
         List<Contact> names = query.filter("name >=", filter).filter("name <", filter + "\uFFFD").list();
         List<Contact> emails = query.filter("emails >=", filter).filter("emails <", filter + "\uFFFD").list();
@@ -40,6 +43,6 @@ public class ContactDao {
     }
 
     public void delete(Long contactId) {
-        ObjectifyService.ofy().delete().type(Contact.class).id(contactId);
+        ofy().delete().type(Contact.class).id(contactId);
     }
 }
