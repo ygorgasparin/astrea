@@ -56,12 +56,12 @@
                 <input type="text" class="form-control  " placeholder="Digite o telefone"
                        ng-model='contact.phones[$index]'>
                 <span class="input-group-btn">
-        			<button class="btn mybtn" type="button" ng-click='deletePhone($index)'><span
+        			<button class="btn mybtn" type="button" ng-click='deleteFromList(contact.phones, $index)'><span
                             class="glyphicon glyphicon-remove "></span></button>
         		</span>
             </div>
         </div>
-        <a ng-click="addMorePhones()"> Adicionar mais </a>
+        <a ng-click="addToList(contact.phones)"> Adicionar mais </a>
     </div>
 
     <div class="form-group">
@@ -71,12 +71,12 @@
                 <input type="text" class="form-control" id="lastname" placeholder="Digite o email"
                        ng-model='contact.emails[$index]'>
                 <span class="input-group-btn">
-        			<button class="btn mybtn" type="button" ng-click='deleteEmail($index)'><span
+        			<button class="btn mybtn" type="button" ng-click='deleteFromList(contact.emails, $index)'><span
                             class="glyphicon glyphicon-remove "></span></button>
       			</span>
             </div>
         </div>
-        <a ng-click="addMoreEmails()"> Adicionar mais </a>
+        <a ng-click="addToList(contact.emails)"> Adicionar mais </a>
     </div>
 
     <legend></legend>

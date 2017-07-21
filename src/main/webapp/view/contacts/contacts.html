@@ -52,7 +52,7 @@
                 <td>{{c.emails[0]}}</td>
                 <td>{{c.cpf}}</td>
                 <td>{{c.phones[0]}}</td>
-                <td>{{bday(c)}}</td>
+                <td>{{c | bDay}}</td>
                 <td>
                     <i class="fa fa-trash-o icon-box" ng-click="preDelete(c)"></i>
                     <i class="fa fa-edit icon-box" ui-sref="main.addeditcontact({id:c.id, contact:c})"></i>

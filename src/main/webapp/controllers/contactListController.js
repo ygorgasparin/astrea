@@ -1,6 +1,4 @@
-var contactListController;
-
-contactListController = function($scope, $http) {
+var contactListController = function($scope, $http, contactService) {
 	$scope.contacts = [];
 	$scope.preDeletedContact = {};
 	$scope.search_filter = "";
@@ -14,10 +12,11 @@ contactListController = function($scope, $http) {
 
 	    var config = {};
         $scope.loading = true;
+
 	    if($scope.search_filter.trim().length > 0)
 	        config.params = {filter:$scope.search_filter};
 
-        $http.get('/contacts', config).then(function(result) {
+        contactService.listAll(config).then(function(result) {
             $scope.contacts = result.data;
             $scope.loading = false;
         }, function(result) {
@@ -41,7 +40,7 @@ contactListController = function($scope, $http) {
 	$scope.delete = function() {
 		if($scope.preDeletedContact != null) {
 
-		    $http.delete('/contacts/' + $scope.preDeletedContact.id).then(function(result) {
+		    contactService.deleteById($scope.preDeletedContact.id).then(function(result) {
                 $scope.listAllContacts();
                 $('#myModal').modal('hide');
             }, function(result) {
@@ -49,14 +48,6 @@ contactListController = function($scope, $http) {
                 alert(result.data.message);
                 console.log(result.data);
             });
-		}
-	};
-
-	$scope.bday = function(c) {
-		if(c.birthDay==null || c.birthDay == ""){
-			return "";
-		} else {
-			return c.birthDay + "/" + c.birthMonth + "/" + c.birthYear;
 		}
 	};
 };
